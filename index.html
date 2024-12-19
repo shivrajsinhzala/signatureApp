@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Signature App</title>
+    <script src="app.js" defer></script>
+  </head>
+  <body
+    class="box-border m-0 p-0 min-h-screen min-w-screen bg-slate-800 grid items-center justify-center"
+  >
+    <div
+      class="mainContainer overflow-hidden flex flex-col justify-center items-center bg-slate-200 h-[600px] w-[800px] rounded-2xl"
+    >
+      <div class="title font-mono font-bold text-2xl m-2">Signature App</div>
+      <div
+        class="canvasContainer h-[500px] w-[800px] border-t-2 border-black"
+      ></div>
+
+      <div
+        class="buttonsContainer bg-gray-300 m-auto flex w-full h-[50px] items-stretch"
+      >
+        <button class="flex-1 outline inline-block hover:bg-blue-300">
+          Save
+        </button>
+        <button class="flex-1 outline inline-block hover:bg-red-300">
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- <div
+      class="mainContainer flex flex-col justify-center items-center bg-slate-200 h-[600px] w-[800px] rounded-2xl"
+    >
+      <div class="title font-mono font-bold text-2xl bg-red-400 m-2">
+        Signature App
+      </div>
+      <div class="canvasContainer h-[500px] w-[800px] bg-black"></div>
+      <div class="buttonsContainer bg-fuchsia-400 flex w-full h-[50px]">
+        <button class="flex-1 outline inline-block">Save</button>
+        <button class="flex-1 outline inline-block">Reset</button>
+      </div>
+    </div> -->
+  </body>
+</html>
