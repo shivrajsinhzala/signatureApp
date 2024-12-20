@@ -8,6 +8,9 @@ var isDrawing = false;
 var preserveStyles = false;
 var newTab = false;
 
+c.fillStyle = "white";
+c.fillRect(0, 0, canvas.width, canvas.height);
+
 var xPosition;
 var yPosition;
 
@@ -20,7 +23,6 @@ canvas.addEventListener("mousedown", (e) => {
 canvas.addEventListener("mousemove", (e) => {
   if (!isDrawing) return;
   c.beginPath();
-
   c.lineCap = "round";
   c.moveTo(xPosition, yPosition);
   c.lineTo(e.offsetX, e.offsetY);
@@ -34,20 +36,28 @@ canvas.addEventListener("mouseup", () => {
   isDrawing = false;
 });
 
+const handlePreserveStyles = () => {
+  preserveStyles = !preserveStyles;
+};
+
 document.getElementById("resetButton").addEventListener("click", () => {
   if (preserveStyles) {
     c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = color;
+    c.fillRect(0, 0, canvas.width, canvas.height);
   } else {
     c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = "white";
+    c.fillRect(0, 0, canvas.width, canvas.height);
     c.strokeStyle = "black";
     c.lineWidth = 1;
     c.globalAlpha = 1;
-    canvas.style.backgroundColor = "white";
   }
 });
 
 document.getElementById("saveButton").addEventListener("click", () => {
-  var image = canvas.toDataURL("image/png");
+  var image = canvas.toDataURL(`image/${fileType}`);
+  console.log(fileType);
   if (newTab) {
     var tab = window.open("about:blank", "image from canvas");
     tab.document.write(
@@ -81,18 +91,45 @@ document.getElementById("closeButton").addEventListener("click", (e) => {
 });
 
 const setBackgroundColor = (color) => {
-  canvas.style.backgroundColor = color;
+  // canvas.style.backgroundColor = color;
+  // canvas.fillRect(0, 0, canvas.width, canvas.height);
+  c.fillStyle = color;
+  c.fillRect(0, 0, canvas.width, canvas.height);
 };
 
 const setPenColor = (color) => {
-  console.log(color);
   c.strokeStyle = color;
-};
-
-const handlePreserveStyles = () => {
-  preserveStyles = !preserveStyles;
 };
 
 const handleOpenInNewTab = () => {
   newTab = !newTab;
+};
+
+document.querySelectorAll(".penColor").forEach((element) => {
+  element.addEventListener("click", (e) => {
+    document.querySelectorAll(".penColor").forEach((element) => {
+      {
+        element.classList.remove("scale-[1.35]");
+      }
+    });
+    // element.classList.remove("scale-[1.35]");
+    e.target.classList.toggle("scale-[1.35]");
+  });
+});
+
+document.querySelectorAll(".backgroundColor").forEach((element) => {
+  element.addEventListener("click", (e) => {
+    document.querySelectorAll(".backgroundColor").forEach((element) => {
+      {
+        element.classList.remove("scale-[1.35]");
+      }
+    });
+    // element.classList.remove("scale-[1.35]");
+    e.target.classList.toggle("scale-[1.35]");
+  });
+});
+
+const handleFileType = (type) => {
+  fileType = type;
+  console.log(fileType);
 };
