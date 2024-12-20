@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="input.css" />
     <title>Signature App</title>
     <script src="app.js" defer></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
   </head>
   <body
     class="box-border m-0 p-0 min-h-screen bg-gray-900 flex items-center justify-center"
@@ -23,6 +24,7 @@
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
           id="settingsIcon"
+          onclick="handleSettingsPanel()"
           class="absolute right-5 top-1/2 transform -translate-y-1/2 h-7 w-7 hover:rotate-90 transition-transform duration-200 cursor-pointer"
         >
           <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -47,22 +49,28 @@
             Background Color
           </div>
           <span
+            onclick="setBackgroundColor('white')"
             class="backgroundColor rounded-xl cursor-pointer bg-white border-2 border-black h-8 w-8 scale-[1.35] hover:scale-[1.35] transition-transform"
           ></span>
           <span
-            class="backgroundColor rounded-xl cursor-pointer bg-black border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
+            onclick="setBackgroundColor('black')"
+            class="backgroundColor data-[color]:rgb(0,0,0) rounded-xl cursor-pointer bg-black border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
           <span
+            onclick="setBackgroundColor('rgb(156,163,175)')"
             class="backgroundColor rounded-xl cursor-pointer bg-gray-400 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
           <span
-            class="backgroundColor rounded-xl cursor-pointer bg-yellow-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
+            onclick="setBackgroundColor('rgb(234,179,8)')"
+            class="backgroundColor data-[color]:rgb(234,179,8) rounded-xl cursor-pointer bg-yellow-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
           <span
-            class="backgroundColor rounded-xl cursor-pointer bg-red-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
+            onclick="setBackgroundColor('rgb(239,68,68)')"
+            class="backgroundColor data-[color]:rgb(239,68,68) rounded-xl cursor-pointer bg-red-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
           <span
-            class="backgroundColor rounded-xl cursor-pointer bg-purple-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
+            onclick="setBackgroundColor('rgb(168,85,247)')"
+            class="backgroundColor data-[color]:rgb(59,130,246) rounded-xl cursor-pointer bg-purple-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
         </div>
 
@@ -85,22 +93,28 @@
             Pen Color
           </div>
           <span
-            class="penColor rounded-xl scale-[1.35] cursor-pointer bg-black border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
+            onclick="setPenColor('#000000')"
+            class="penColor data-[color]:rgb(0,0,0) rounded-xl scale-[1.35] cursor-pointer bg-black border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
           <span
-            class="penColor rounded-xl cursor-pointer bg-white border-2 border-black h-8 w-8 hover:scale-[1.35] transition-transform"
+            onclick="setPenColor('#ffffff')"
+            class="penColor data-[color]:rgb(255,255,255) rounded-xl cursor-pointer bg-white border-2 border-black h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
           <span
-            class="penColor rounded-xl cursor-pointer bg-yellow-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
+            onclick="setPenColor('#eab308')"
+            class="penColor data-[color]:rgb(234,179,8) rounded-xl cursor-pointer bg-yellow-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
           <span
-            class="penColor rounded-xl cursor-pointer bg-red-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
+            onclick="setPenColor('#ef4444')"
+            class="penColor data-[color]:rgb(239,68,68) rounded-xl cursor-pointer bg-red-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
           <span
-            class="penColor rounded-xl cursor-pointer bg-purple-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
+            onclick="setPenColor('#a855f7')"
+            class="penColor data-[color]:rgb(168,85,247) rounded-xl cursor-pointer bg-purple-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
           <span
-            class="penColor rounded-xl cursor-pointer bg-blue-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
+            onclick="setPenColor('#3b82f6')"
+            class="penColor data-[color]:rgb(59,130,246) rounded-xl cursor-pointer bg-blue-500 border-2 border-white h-8 w-8 hover:scale-[1.35] transition-transform"
           ></span>
         </div>
       </div>
@@ -167,18 +181,37 @@
           <option value="jpeg">JPEG</option>
         </select>
         <span class="w-full border-b-2 mt-2"></span>
-
-        <label
-          for="openinnewtab"
-          class="text-lg font-bold mt-3 w-2/3 cursor-pointer pb-3"
-        >
+        <span>
           <input
             type="checkbox"
             id="openinnewtab"
             name="openinnewtab"
             class="mr-3 cursor-pointer"
-          />Open saved image in new tab
-        </label>
+            onclick="handleOpenInNewTab()"
+          />
+          <label
+            for="openinnewtab"
+            class="text-lg font-bold w-2/3 cursor-pointer"
+          >
+            Open in new tab
+          </label>
+        </span>
+        <span class="border-b-2 w-full"></span>
+        <span>
+          <input
+            type="checkbox"
+            id="PreserveSettings"
+            name="PreserveSettings"
+            class="mr-3 cursor-pointer"
+            onclick="handlePreserveStyles()"
+          />
+          <label
+            for="PreserveSettings"
+            class="text-lg font-bold mt-3 w-2/3 cursor-pointer pb-3"
+          >
+            Preserve Settings
+          </label>
+        </span>
         <span class="border-b-2 w-full"></span>
 
         <button

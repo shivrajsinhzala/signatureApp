@@ -3,13 +3,15 @@ var c = canvas.getContext("2d");
 const setting = document.getElementById("settingsIcon");
 const penOpacity = document.getElementById("penOpacity");
 var fileType = document.getElementById("fileType").value;
-
+c.strokeStyle = "black";
 var isDrawing = false;
+var preserveStyles = false;
+var newTab = false;
 
 var xPosition;
 var yPosition;
+
 canvas.addEventListener("mousedown", (e) => {
-  //   console.log(e);
   isDrawing = true;
   yPosition = e.offsetY;
   xPosition = e.offsetX;
@@ -18,7 +20,7 @@ canvas.addEventListener("mousedown", (e) => {
 canvas.addEventListener("mousemove", (e) => {
   if (!isDrawing) return;
   c.beginPath();
-  c.strokeStyle = "black";
+
   c.lineCap = "round";
   c.moveTo(xPosition, yPosition);
   c.lineTo(e.offsetX, e.offsetY);
@@ -32,26 +34,26 @@ canvas.addEventListener("mouseup", () => {
   isDrawing = false;
 });
 
-// canvas.addEventListener("mousemove", (e) => {
-//   //   console.log(e);
-//   yPosition = e.offsetY;
-//   xPosition = e.offsetX;
-// });
-
-// document.getElementById("resetButton").onclick((e) => {
-//   c.clearRect(0, 0, 800, 900);
-// });
-
 document.getElementById("resetButton").addEventListener("click", () => {
-  c.clearRect(0, 0, canvas.width, canvas.height);
+  if (preserveStyles) {
+    c.clearRect(0, 0, canvas.width, canvas.height);
+  } else {
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.strokeStyle = "black";
+    c.lineWidth = 1;
+    c.globalAlpha = 1;
+    canvas.style.backgroundColor = "white";
+  }
 });
 
 document.getElementById("saveButton").addEventListener("click", () => {
   var image = canvas.toDataURL("image/png");
-  var newTab = window.open("about:blank", "image from canvas");
-  newTab.document.write(
-    "<img src='" + image + "' alt='from canvas' download />"
-  );
+  if (newTab) {
+    var tab = window.open("about:blank", "image from canvas");
+    tab.document.write(
+      "<img src='" + image + "' alt='from canvas' download />"
+    );
+  }
   let downloadLink = document.createElement("a");
   downloadLink.setAttribute("download", `signature.${fileType}`);
   let url = image.replace(/^data:image\/png/, "data:application/octet-stream");
@@ -59,11 +61,10 @@ document.getElementById("saveButton").addEventListener("click", () => {
   downloadLink.click();
 });
 
-setting.addEventListener("click", () => {
-  console.log(
-    document.getElementById("settingsPanel").classList.toggle("hidden")
-  );
-});
+const handleSettingsPanel = () => {
+  console.log("click");
+  document.getElementById("settingsPanel").classList.toggle("hidden");
+};
 
 document.getElementById("penSize").addEventListener("change", (e) => {
   c.lineWidth = e.target.value;
@@ -76,19 +77,22 @@ penOpacity.addEventListener("change", (e) => {
 });
 
 document.getElementById("closeButton").addEventListener("click", (e) => {
-  document.getElementById("settingsPanel").classList.add("hidden");
+  handleSettingsPanel();
 });
 
-// document.querySelectorAll(".penColor").forEach((colorButton) => {
-//   colorButton.addEventListener("click", (e) => {
-//     c.strokeStyle = e.target.style.backgroundColor; // Set stroke color
-//     console.log(e.target.style);
-//   });
-// });
+const setBackgroundColor = (color) => {
+  canvas.style.backgroundColor = color;
+};
 
-// document.querySelectorAll(".backgroundColor").forEach((colorButton) => {
-//   colorButton.addEventListener("click", (e) => {
-//     c.fillStyle = e.target.style.backgroundColor; // Set fill color
-//     // c.fill = e.target.style.backgroundColor; // Set stroke color
-//   });
-// });
+const setPenColor = (color) => {
+  console.log(color);
+  c.strokeStyle = color;
+};
+
+const handlePreserveStyles = () => {
+  preserveStyles = !preserveStyles;
+};
+
+const handleOpenInNewTab = () => {
+  newTab = !newTab;
+};
