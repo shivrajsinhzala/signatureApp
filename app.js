@@ -42,16 +42,17 @@ const handlePreserveStyles = () => {
 
 document.getElementById("resetButton").addEventListener("click", () => {
   if (preserveStyles) {
-    c.clearRect(0, 0, canvas.width, canvas.height);
-    c.fillStyle = color;
-    c.fillRect(0, 0, canvas.width, canvas.height);
+    const currentFillStyle = c.fillStyle; // Save the current background color
+    c.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+    c.fillStyle = currentFillStyle; // Restore the saved background color
+    c.fillRect(0, 0, canvas.width, canvas.height); // Reapply the background color
   } else {
-    c.clearRect(0, 0, canvas.width, canvas.height);
-    c.fillStyle = "white";
-    c.fillRect(0, 0, canvas.width, canvas.height);
-    c.strokeStyle = "black";
-    c.lineWidth = 1;
-    c.globalAlpha = 1;
+    c.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+    c.fillStyle = "white"; // Reset to default background color
+    c.fillRect(0, 0, canvas.width, canvas.height); // Apply the default background color
+    c.strokeStyle = "black"; // Reset pen color
+    c.lineWidth = 1; // Reset pen size
+    c.globalAlpha = 1; // Reset pen opacity
   }
 });
 
