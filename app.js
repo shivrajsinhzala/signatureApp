@@ -53,6 +53,10 @@ document.getElementById("resetButton").addEventListener("click", () => {
     c.strokeStyle = "black"; // Reset pen color
     c.lineWidth = 1; // Reset pen size
     c.globalAlpha = 1; // Reset pen opacity
+    document.getElementById("penSize").value = 1;
+    document.getElementById("penOpacity").value = 1;
+    document.getElementById("penSizeValue").innerText = 1;
+    document.getElementById("penOpacityValue").innerText = 1;
   }
 });
 
